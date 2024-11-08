@@ -1,3 +1,6 @@
+require_relative './randomizer'
+require_relative './tetronimo'
+
 class Grid
     def initialize
         @grid = (0...10).map do |i|
@@ -14,20 +17,25 @@ class Grid
             end
         end
 
-        @x_pos = 0
-        @y_pos = 0
-        @grid[@x_pos][@y_pos+2][:square].color = '#00ffff'
+        @randomizer = Randomizer.new
+
+        @x_pos = 1
+        @y_pos = 1
+        @tetronimo = Tetronimo.new(@randomizer.next)
+        set_status(@x_pos, @y_pos, :live)
     end
 
     def set_status(x, y, status)
-        @grid[@x_pos][@y_pos+2][:status] = status
-        case status
-        when :free
-            @grid[@x_pos][@y_pos+2][:square].color = 'black'
-        when :live
-            @grid[@x_pos][@y_pos+2][:square].color = '#00ffff'
-        when :dead
-            @grid[@x_pos][@y_pos+2][:square].color = 'red'
+        @tetronimo.draw_pos.map do |x,y|
+            @grid[x+@x_pos][y+@y_pos+2][:status] = status
+            case status
+            when :free
+                @grid[x+@x_pos][y+@y_pos+2][:square].color = 'black'
+            when :live
+                @grid[x+@x_pos][y+@y_pos+2][:square].color = '#0000dd'
+            when :dead
+                @grid[x+@x_pos][y+@y_pos+2][:square].color = 'red'
+            end
         end
     end
 
@@ -36,19 +44,16 @@ class Grid
     end
 
     def free?(x, y)
-        get_status(x, y) == :free
-    end
-
-    def live?(x, y)
-        get_status(x, y) == :live
-    end
-
-    def dead?(x, y)
-        get_status(x, y) == :dead
+        @tetronimo.draw_pos.all? do |x_offset, y_offset|
+            x_valid = x + x_offset >= 0 && x + x_offset < 10
+            y_valid = y + y_offset >= 0 && y + y_offset < 20
+            dead = get_status(x + x_offset, y + y_offset) == :dead
+            x_valid && y_valid && !dead
+        end
     end
 
     def up
-        if @y_pos > 0 && free?(@x_pos, @y_pos-1)
+        if free?(@x_pos, @y_pos-1)
             set_status(@x_pos, @y_pos, :free)
             @y_pos -= 1
             set_status(@x_pos, @y_pos, :live)
@@ -56,7 +61,7 @@ class Grid
     end
 
     def down
-        if @y_pos < 19 && free?(@x_pos, @y_pos+1)
+        if free?(@x_pos, @y_pos+1)
             set_status(@x_pos, @y_pos, :free)
             @y_pos += 1
             set_status(@x_pos, @y_pos, :live)
@@ -64,7 +69,7 @@ class Grid
     end
 
     def left
-        if @x_pos > 0 && free?(@x_pos-1, @y_pos)
+        if free?(@x_pos-1, @y_pos)
             set_status(@x_pos, @y_pos, :free)
             @x_pos -= 1
             set_status(@x_pos, @y_pos, :live)
@@ -72,7 +77,7 @@ class Grid
     end
 
     def right
-        if @x_pos < 9 && free?(@x_pos+1, @y_pos)
+        if free?(@x_pos+1, @y_pos)
             set_status(@x_pos, @y_pos, :free)
             @x_pos += 1
             set_status(@x_pos, @y_pos, :live)
@@ -81,8 +86,9 @@ class Grid
 
     def reset
         set_status(@x_pos, @y_pos, :dead)
-        @x_pos = 0
-        @y_pos = 0
+        @x_pos = 1
+        @y_pos = 1
+        @tetronimo = Tetronimo.new(@randomizer.next)
         set_status(@x_pos, @y_pos, :live)
     end
 end
