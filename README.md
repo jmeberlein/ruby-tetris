@@ -14,7 +14,7 @@ Run `tetris.rb`
 
 # Playing the "Game"
 
-The D-pad moves the block, A and B rotate it (Xbox layout, so A is CW, B is CCW), X makes the block drop, and Y pockets the current block.
+The D-pad moves the block, A and B rotate it (Xbox layout, so A is CCW, B is CW), X makes the block drop, and Y pockets the current block.
 
 # Design Notes
 
