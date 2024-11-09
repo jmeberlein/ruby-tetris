@@ -26,6 +26,10 @@ on :controller_button_down do |event|
     when :down
         grid.down
     when :a
+        grid.rotate_left
+    when :b
+        grid.rotate_right
+    when :x
         grid.reset
     when :back
         close
