@@ -8,9 +8,9 @@ Use your Ruby manager of choice to install Ruby 2D
 
     $ gem install ruby2d
 
-Run `ruby2d.rb`
+Run `tetris.rb`
 
-    $ ruby ruby2d.rb
+    $ ruby tetris.rb
 
 # Playing the "Game"
 
