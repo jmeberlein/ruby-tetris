@@ -15,14 +15,14 @@ set ({
 
 grid = Grid.new
 
+tick = 0
+
 on :controller_button_down do |event|
     case event.button
     when :left
         grid.left
     when :right
         grid.right
-    when :up
-        grid.up
     when :down
         grid.down
     when :a
@@ -30,10 +30,19 @@ on :controller_button_down do |event|
     when :b
         grid.rotate_right
     when :x
-        grid.reset
+        grid.drop
+    when :y
+        grid.pocket
     when :back
         close
     end
+end
+
+update do
+  if tick % 60 == 0
+    grid.down
+  end
+  tick += 1
 end
 
 show

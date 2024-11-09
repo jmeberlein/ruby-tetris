@@ -57,6 +57,10 @@ class Tetronimo
         @position
     end
 
+    def reset
+        @rotation = 0
+    end
+
     def rotate_left
         return [[0, 0]] if @shape == :o
 

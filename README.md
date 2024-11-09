@@ -14,7 +14,7 @@ Run `tetris.rb`
 
 # Playing the "Game"
 
-This is very much a work in progress. Currently, it's just a proof of concept. You *should* be able to use any controller, with the D-pad moving the tetronimo, the A button freezing the tetronimo in place and generating a new one at the top left, and the Back/Select button exiting the program.
+The D-pad moves the block, A and B rotate it (Xbox layout, so A is CW, B is CCW), X makes the block drop, and Y pockets the current block.
 
 # Design Notes
 
@@ -26,4 +26,4 @@ So... the 3D glasses I have aren't perfect. The red/left lens lets some green li
 
 # TODO
 
-I mean... it's supposed to be Tetris. Next is adding tetronimoes, then rotation, then gravity, then "pocketing" a tetronimo, etc. Oh, and actually making this a proper project, so Bundler can handle dependencies.
+QOL features. It's *playable*, but lacks things like shadows, seeing what block is next, seeing what block is in your pocket, scorekeeping, etc.
